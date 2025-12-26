@@ -1,0 +1,27 @@
+{
+  "name": "tartarus-keymap",
+  "version": "2.0.0",
+  "description": "Node.js CLI tool that produces a clear, accurate, human-readable list of all Karabiner-Elements modifications applied to a Razer Tartarus V2 (or any specified device)",
+  "main": "src/index.js",
+  "bin": {
+    "tartarus-keymap": "./src/index.js"
+  },
+  "scripts": {
+    "test": "node src/index.js --help"
+  },
+  "keywords": [
+    "karabiner",
+    "karabiner-elements",
+    "tartarus",
+    "keybindings",
+    "parser",
+    "keymap",
+    "reporter"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
