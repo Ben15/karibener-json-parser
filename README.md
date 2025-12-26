@@ -171,6 +171,17 @@ Plain text format suitable for terminal output or simple text files.
 - Node.js 18 or newer
 - macOS (primary target, but OS-agnostic if JSON paths are supplied)
 
+## Validation
+
+The tool includes automatic validation to prevent common mapping mistakes:
+
+- ✅ Validates that `FROM` keycodes match what physical keys actually emit
+- ✅ Warns about unmapped physical keys
+- ✅ Detects D-pad mapping issues
+- ✅ Provides helpful error messages with fix suggestions
+
+See [VALIDATION.md](VALIDATION.md) for details on common mistakes and how to avoid them.
+
 ## What This Tool Does NOT Do
 
 - ❌ Attempt to infer physical Tartarus key numbers

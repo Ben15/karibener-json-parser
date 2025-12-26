@@ -11,6 +11,8 @@ const { extractManipulatorData } = require('./manipulator');
 const { extractScope, formatScope } = require('./scope');
 const { filterManipulators } = require('./filter');
 const { formatMarkdown, formatText, formatJSON } = require('./formatter');
+const { validatePhysicalKeyMappings, validateDpadMappings } = require('./validator');
+const { getPhysicalKey } = require('./tartarus-map');
 
 function parseArgs() {
   const args = process.argv.slice(2);
@@ -206,6 +208,42 @@ function main() {
 
     // Process manipulators (extract scope, format data)
     allRules = processRules(allRules);
+
+    // Validate mappings before filtering
+    const validationErrors = validatePhysicalKeyMappings(allRules, getPhysicalKey);
+    const dpadErrors = validateDpadMappings(allRules);
+    
+    if (validationErrors.errors.length > 0 || dpadErrors.length > 0) {
+      console.error('⚠️  Validation Errors Found:\n');
+      
+      for (const error of validationErrors.errors) {
+        console.error(`❌ ${error.message}`);
+        if (error.mappings) {
+          error.mappings.forEach(m => {
+            console.error(`   - Rule "${m.rule}", manipulator ${m.manipulatorIndex}: FROM '${m.fromKeyCode}'`);
+          });
+        }
+        console.error('');
+      }
+      
+      for (const error of dpadErrors) {
+        console.error(`❌ ${error.message}`);
+        console.error('');
+      }
+      
+      if (validationErrors.warnings.length > 0) {
+        console.error('⚠️  Warnings:\n');
+        for (const warning of validationErrors.warnings) {
+          console.error(`   ⚠ ${warning.message}`);
+        }
+        console.error('');
+      }
+      
+      console.error('💡 Tip: Physical keys emit specific keycodes. Make sure your FROM keycodes match what the physical keys actually send.');
+      console.error('   Use Karabiner-Elements EventViewer to verify what keycode each physical key emits.\n');
+      
+      // Don't exit - just warn, but continue processing
+    }
 
     // Apply filters
     const filteredRules = filterManipulators(allRules, {

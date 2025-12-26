@@ -2,8 +2,14 @@
  * Tartarus Physical Key Mapping
  * Maps Karabiner keycodes to physical Tartarus V2 key positions (01-20)
  * 
- * Note: This is an inferred mapping based on common Tartarus configurations.
- * The actual physical layout may vary, but this provides a reference.
+ * IMPORTANT: This mapping defines what keycode each physical key EMITS.
+ * When creating manipulators, the FROM keycode MUST match what the physical key sends.
+ * 
+ * Example: Physical key 14 emits 'd', so a manipulator for key 14 must have:
+ *   "from": { "key_code": "d" }  ✅ Correct
+ *   "from": { "key_code": "b" }  ❌ Wrong - this won't match key 14
+ * 
+ * To verify what keycode a physical key emits, use Karabiner-Elements EventViewer.
  */
 
 // Standard Tartarus V2 layout mapping
@@ -15,9 +21,9 @@ const TARTARUS_KEY_MAP = {
   '3': '03',
   '4': '04',
   '5': '05',
-  '6': '06',
-  '7': '07',
-  '8': '08',
+  '6': '06',  // Key 06 -> Hold ⌘ (lazy modifier)
+  '7': '07',  // Key 07 -> Hold ⌥ (lazy modifier)
+  '8': '08',  // Key 08 -> Hold ⇧ (lazy modifier)
   '9': '09',
   '0': '10',
   
@@ -25,23 +31,21 @@ const TARTARUS_KEY_MAP = {
   'caps_lock': '11',  // Key 11 -> ⌘ F
   'a': '12',          // Key 12 -> Hold ⌥ (lazy)
   's': '13',          // Key 13 -> ⌘ D
-  'd': '14',          // Key 14 -> Hold ⌘ (lazy)
+  'd': '14',          // Key 14 -> B (physical key 14 emits 'd')
   'f': '15',          // Key 15 -> R
   
   // Bottom grid (16-20) - correct Tartarus layout
   'left_shift': '16', // Key 16 -> (unchanged)
-  'z': '17',          // Key 17 -> (unchanged)
-  'x': '18',          // Key 18 -> B
+  'z': '17',          // Key 17 -> (unchanged, but may be remapped)
+  'x': '18',          // Key 18 -> (unchanged)
   'c': '19',          // Key 19 -> (removed / no binding)
   // Key 20 -> (not defined / untouched)
   
   // Common alternative layouts
   'q': '11',
   'tab': '11',
-  'left_control': '14',
   'v': '20',
   'g': '20',
-  'b': '20',
   
   // D-pad (not numbered, but mapped)
   'up_arrow': 'D-pad Up',
