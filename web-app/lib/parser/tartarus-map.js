@@ -53,7 +53,7 @@ const TARTARUS_KEY_MAP = {
   'left_arrow': 'D-pad Left',
   'right_arrow': 'D-pad Right',
   
-  // Option key (also called Hyperesponse thumb key)
+  // Option key
   'left_option': 'Option',
   'right_option': 'Option',
 };
